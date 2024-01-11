@@ -19,16 +19,22 @@ public class PlayerMovement : MonoBehaviour
         if(isRotating){
             Rotate();
         }
-
         if(isThrusting){
             Thrust();
         }
     }
 
     private void Rotate(){
-        rigidBody.AddTorque(rotationDirection * rotationSpeed * Time.deltaTime);
+        
+        rigidBody.freezeRotation = true;
+        //float impulse = rotationDirection * rotationSpeed * Time.deltaTime;
+        //rigidBody.AddTorque(impulse);
+        rigidBody.rotation += rotationDirection * rotationSpeed * Time.deltaTime;
         Debug.Log("Rotating");
+        rigidBody.freezeRotation = false;
     }
+
+
 
     private void Thrust(){
         rigidBody.AddRelativeForce(Vector2.up * thrustSpeed * Time.deltaTime);
