@@ -148,7 +148,7 @@ Transform:
   m_GameObject: {fileID: 45371487}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.15, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 0.39567995, y: 0.39567995, z: 0.39567995}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -204,6 +204,11 @@ Transform:
 --- !u!4 &107925579 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5885290502104572051, guid: 73f2037c75f1dff6898be2722b973746, type: 3}
+  m_PrefabInstance: {fileID: 2524399246555304491}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &107925581 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5630869492151608714, guid: 73f2037c75f1dff6898be2722b973746, type: 3}
   m_PrefabInstance: {fileID: 2524399246555304491}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &263016562
@@ -647,7 +652,8 @@ MonoBehaviour:
   rotationSpeed: 110
   thrustSpeed: 275
   directionIndicator: {fileID: 45371487}
-  indicatorDistance: {x: 1, y: 1.5}
+  thrustIndicatorDistance: {x: 1, y: 1}
+  thrustEffect: {fileID: 107925581}
 --- !u!114 &529248935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43483,7 +43489,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5885290502104572051, guid: 73f2037c75f1dff6898be2722b973746, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.8
       objectReference: {fileID: 0}
     - target: {fileID: 5885290502104572051, guid: 73f2037c75f1dff6898be2722b973746, type: 3}
       propertyPath: m_LocalPosition.z
