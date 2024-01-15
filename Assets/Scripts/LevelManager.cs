@@ -6,13 +6,24 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] float sceneReloadDelay = 2;
-    public void ReloadScene(){
-        StartCoroutine(LoadSceneDelayed(sceneReloadDelay, SceneManager.GetActiveScene().buildIndex));
-    }
-
+    [SerializeField] float levelReloadDelay = 2;
+    [SerializeField] float nextLevelLoadDelay = 2;
+    
     private IEnumerator LoadSceneDelayed(float delay, int sceneBuildIndex){
         yield return new WaitForSeconds(delay);
         SceneManager.LoadScene(sceneBuildIndex);
+    }
+    
+    public void ReloadScene(){
+        StartCoroutine(LoadSceneDelayed(levelReloadDelay, SceneManager.GetActiveScene().buildIndex));
+    }
+
+    public void LoadNextLevel(){
+        int nextSceneBuildIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        if(nextSceneBuildIndex > SceneManager.sceneCount - 1){
+            nextSceneBuildIndex = 0; // Si estoy en la última escena, loopea a la primera
+        }
+
+        StartCoroutine(LoadSceneDelayed(nextLevelLoadDelay, nextSceneBuildIndex));
     }
 }
