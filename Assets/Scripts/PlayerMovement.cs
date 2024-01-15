@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isRotating = false;
     private bool isThrusting = false;
     private Rigidbody2D rigidBody;
+    [SerializeField] private float bounce = 1f;
 
     private void Awake(){
         rigidBody = GetComponent<Rigidbody2D>();
@@ -60,5 +61,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnThrust(InputValue input){
         isThrusting = input.isPressed;
+    }
+
+    public void ProcessCrash(Collision2D collision){
+        rigidBody.AddRelativeForce(collision.GetContact(0).normal * bounce);
     }
 }
