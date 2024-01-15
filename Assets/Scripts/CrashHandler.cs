@@ -7,14 +7,15 @@ public class CrashHandler : MonoBehaviour
 {
     
     private PlayerMovement playerMovement;
+    private Health playerHealth;
 
     private void Awake(){
         playerMovement = GetComponent<PlayerMovement>();
+        playerHealth = GetComponent<Health>();
     }
     
     private void OnCollisionEnter2D(Collision2D other) {
         playerMovement.ProcessCrash(other);
-        Debug.Log("Crashed!");
-        Debug.Log("Normal: " + other.GetContact(0).normal);
+        playerHealth.TakeHit();
     }
 }
