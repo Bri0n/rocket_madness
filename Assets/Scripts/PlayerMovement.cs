@@ -9,7 +9,10 @@ public class PlayerMovement : MonoBehaviour
     [Header("Thrust")]
     [SerializeField] private float thrustSpeed = 1f;
     [SerializeField] private ParticleSystem thrustEffect;
+    [SerializeField] private float freezeSpeed = 10f;
+    private float defaultDrag;
     private bool isThrusting = false;
+    private bool isFreezing = false;
     private Vector2 thrustDirection = new Vector2(0, 1);
 
     [Header("Direction Indicator")]
@@ -23,9 +26,11 @@ public class PlayerMovement : MonoBehaviour
     
     private void Awake(){
         rigidBody = GetComponent<Rigidbody2D>();
+        defaultDrag = rigidBody.drag;
     }
     private void Update()
     {
+        ProcessFreeze();
         ProcessThrust();
     }
 
@@ -51,10 +56,17 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void ProcessFreeze(){
+        if(isFreezing){
+            rigidBody.drag = freezeSpeed;
+        } else {
+            rigidBody.drag = defaultDrag;
+        }
+    }
+
     private void OnRotate(InputValue value){
         Vector2 newDirection = value.Get<Vector2>();
-        if(newDirection != Vector2.zero)
-        {
+        if(newDirection != Vector2.zero){
             thrustDirection = newDirection * thrustIndicatorDistance;
             UpdateMovementEffects(newDirection);
         }
@@ -71,11 +83,28 @@ public class PlayerMovement : MonoBehaviour
         thrustEffect.transform.rotation = indicator.rotation;
     }
 
-    private void OnThrust(InputValue input){
-        isThrusting = input.isPressed;
+    private void OnThrust(InputValue value){
+        isThrusting = value.isPressed && !isFreezing;
+    }
+
+    private void OnFreeze(InputValue value){
+        isFreezing = value.isPressed && !isThrusting;
     }
 
     public void ProcessCrash(Collision2D collision){
         rigidBody.AddRelativeForce(collision.GetContact(0).normal * bounce);
+    }
+
+    public void StartFinishSequence(){
+        rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
+    }
+
+    public void ProcessPlayerDeath(){
+        StopThrusting();
+        TogglePlayerMovement();
+    }
+    
+    private void TogglePlayerMovement(){
+        enabled = !enabled;
     }
 }

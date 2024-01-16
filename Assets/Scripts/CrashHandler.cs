@@ -18,6 +18,7 @@ public class CrashHandler : MonoBehaviour
     
     private void OnCollisionEnter2D(Collision2D other) {
         if(other.gameObject.tag == "Finish"){
+            playerMovement.StartFinishSequence();
             levelManager.LoadNextLevel();
         } else if(other.gameObject.tag != "Friendly"){
             playerMovement.ProcessCrash(other);

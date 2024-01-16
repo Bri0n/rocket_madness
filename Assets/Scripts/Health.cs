@@ -28,7 +28,7 @@ public class Health : MonoBehaviour
     private void ProcessDeath(){
         if(health <= 0){
             if(playerMovement != null){
-                playerMovement.enabled = false;
+                playerMovement.ProcessPlayerDeath();
             }
             levelManager.ReloadScene();
         }
